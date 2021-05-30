@@ -7,9 +7,9 @@ import java.awt.image.Kernel;
 public class FiltroDeteccionEsquinas implements Imagen {
 	
 	private Imagen siguiente;
-	private float[] filtroDeteccionEsquinas = { (float) (0.25), (float) (0.0), (float) (0.25),
+	private float[] filtroDeteccionEsquinas = { (float) (- 1.0), (float) (- 1.0), (float) (- 1.0), 
 			(float) (0.0), (float) (0.0), (float) (0.0), 
-			(float) (0.25), (float) (0.0), (float) (0.25) };
+			(float) (1.0), (float) (1.0), (float) (1.0) };
 	private Kernel mascara = new Kernel(3, 3, filtroDeteccionEsquinas);
 
 	public FiltroDeteccionEsquinas(Imagen sig) {
