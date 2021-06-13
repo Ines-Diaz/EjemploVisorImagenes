@@ -1,45 +1,14 @@
 package observable_decorador;
 
-import java.awt.image.BufferedImage;
-import java.awt.image.ConvolveOp;
-import java.awt.image.Kernel;
-
-public class FiltroSuavizado implements Imagen {	
-
-	private Imagen siguiente;
-	private float[] filtroSuavizado = { (float) (1.0 / 9.0), (float) (1.0 / 9.0), (float) (1.0 / 9.0), 
+public class FiltroSuavizado extends FiltroGeneral {	
+	
+	private float[] filtroM = { (float) (1.0 / 9.0), (float) (1.0 / 9.0), (float) (1.0 / 9.0), 
 			(float) (1.0 / 9.0), (float) (1.0 / 9.0), (float) (1.0 / 9.0), 
 			(float) (1.0 / 9.0), (float) (1.0 / 9.0), (float) (1.0 / 9.0) };
-	private Kernel mascara = new Kernel(3, 3, filtroSuavizado);
-	
+
 	public FiltroSuavizado(Imagen sig) {
-		siguiente = sig;
-	}
-
-	public BufferedImage aplicarFiltroEspecifico(BufferedImage imagenOrigen) {
-		BufferedImage imagenDestino = new BufferedImage(imagenOrigen.getWidth(), 
-				imagenOrigen.getHeight(), 
-				imagenOrigen.getType());
-		ConvolveOp operadorConv = new ConvolveOp(mascara);
-		operadorConv.filter(imagenOrigen, imagenDestino);
-		copyBufferedImage(imagenDestino, imagenOrigen);
-		return imagenOrigen;
-	}
-
-	private void copyBufferedImage(BufferedImage dest, BufferedImage copy) {
-		int ancho = dest.getWidth(), alto = dest.getHeight();
-		copy.setRGB(0, 0, ancho - 1, alto - 1, dest.getRGB(0, 0, ancho - 1, alto - 1, null, 0, ancho), 0, ancho);
-	}
-
-	@Override
-	public BufferedImage aplicarFiltro() {
-		BufferedImage imagenOrigen = siguiente.aplicarFiltro();
-		return aplicarFiltroEspecifico(imagenOrigen);
-	}
-
-	@Override
-	public BufferedImage GetImagen() {
-		return siguiente.GetImagen();
-	}
+		super(sig);
+		super.setFiltroMatriz(filtroM);
+	}	
 
 }
